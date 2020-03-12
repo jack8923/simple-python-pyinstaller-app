@@ -21,14 +21,14 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test  sources/test_calc.py'
+                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
-            //--verbose --junit-xml test-reports/results.xml
-            //post {
-            //    always {
-            //        junit 'test-reports/results.xml'
-            //    }
-            //}
+            
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
         }
         //stage('Deliver') { 
         //    agent {
