@@ -24,11 +24,31 @@ pipeline {
                 sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             
+            //post {
+            //    always {
+            //        junit 'test-reports/results.xml'
+            //    }
+            //}
             post {
                 always {
-                    junit 'test-reports/results.xml'
+                    publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'build/reports/tests/test',
+                        reportFiles: 'index.html',
+                        reportName: 'Junit Report'
+                    ]
+                    publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'build/reports/jacoco/test/html',
+                        reportFiles: 'index.html',
+                        reportName: 'Code Coverage Report'
+                    ]
                 }
-            }
+           }
         }
         //stage('Deliver') { 
         //    agent {
