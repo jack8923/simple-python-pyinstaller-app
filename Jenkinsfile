@@ -31,7 +31,16 @@ pipeline {
             //}
             post {
                 success {
-                    sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                    stage('S Test') { 
+                        steps {
+                            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                        }
+                    }
+                    stage('S Test') {
+                        steps {
+                            sh 'python source/calc.py'
+                        }
+                    }
                 }     
  //               always {
  //                   publishHTML target: [
