@@ -31,16 +31,8 @@ pipeline {
             //}
             post {
                 success {
-                    stage('S Test') { 
-                        steps {
-                            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
-                        }
-                    }
-                    stage('S Test') {
-                        steps {
-                            sh 'python source/calc.py'
-                        }
-                    }
+                    sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+                    sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
                 }     
  //               always {
  //                   publishHTML target: [
